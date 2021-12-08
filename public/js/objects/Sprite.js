@@ -57,7 +57,7 @@ export class Sprite extends Rectangle {
 
     applyPhysics(deltaTime) {
         this.ppos = { ...this.pos };
-        this.onGround = false; // would not be here.
+        this.onGround = false;
         this.vel.y += this.gravity * deltaTime;
         this.pos.y += this.vel.y * deltaTime;
         this.pos.x += this.vel.x * deltaTime;

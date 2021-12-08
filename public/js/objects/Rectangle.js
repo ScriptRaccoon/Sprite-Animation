@@ -1,11 +1,8 @@
-import { canvas, ctx } from "../canvas.js";
-
 export class Rectangle {
     constructor({ pos, size }) {
         this.level = null;
         this.pos = pos;
         this.size = size || { x: 16, y: 16 };
-        this.originalPos = { ...this.pos };
     }
 
     get left() {
