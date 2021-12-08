@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+}
+canvas {
+    position: absolute;
+    border-radius: 4px;
+}
+
+#backgroundCanvas {
+    z-index: 0;
+}
+
+#tileCanvas {
+    z-index: 1;
+}
+
+#objectCanvas {
+    z-index: 2;
+}
