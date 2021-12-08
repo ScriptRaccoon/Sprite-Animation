@@ -15,7 +15,7 @@ The game objects are divided into the following classes:
 
 Both controls and features are made reusable, so that they can also be applied to other classes of sprites. It is not a complete game, and has just one level, but it can easily be extended to a proper game. The timer class is borrowed from [here](https://github.com/meth-meth-method/super-mario).
 
-This is a continuation of my [previous template](https://github.com/ScriptRaccoon/jump-and-run-template) where all objects where drawn just as plain rectangles.
+This is a continuation of my [previous template](https://github.com/ScriptRaccoon/jump-and-run-template) where all objects where drawn just as plain rectangles. The branch 'setup' in this repository roughly starts from there (except that there is no game class and no push function for boxes).
 
 The spritesheets used here are from [opengameart](https://opengameart.org) (with slight edits).
 
