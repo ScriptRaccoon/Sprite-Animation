@@ -1,4 +1,4 @@
-const collide = {
+export const collide = {
     above: (entity, obj) => {
         if (
             entity.prevBottom <= obj.top &&
@@ -36,16 +36,4 @@ const collide = {
             entity.vel.x = 0;
         }
     },
-};
-
-export const collideWithRectangles = (entity) => {
-    entity.onGround = false;
-    return (objects) => {
-        for (const obj of objects.rectangles) {
-            collide.above(entity, obj);
-            collide.below(entity, obj);
-            collide.left(entity, obj);
-            collide.right(entity, obj);
-        }
-    };
 };

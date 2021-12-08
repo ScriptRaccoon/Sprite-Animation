@@ -1,10 +1,6 @@
 import { clearCanvas, canvas, ctx } from "./canvas.js";
-import { IMAGE } from "./images.js";
 import { Player } from "./objects/Player.js";
-import { Rectangle } from "./objects/Rectangle.js";
 import { Timer } from "./Timer.js";
-import { Bird } from "./objects/Bird.js";
-import { Background } from "./objects/Background.js";
 
 const STATUS = {
     READY: 1,
@@ -12,39 +8,22 @@ const STATUS = {
     PAUSED: 3,
 };
 
-export const TILE_SIZE = 16;
-
-const SOLID_TILES = [
-    "1,1",
-    "0,1",
-    "2,1",
-    "0,3",
-    "1,3",
-    "2,3",
-    "1,0",
-    "4,1",
-    "5,1",
-    "6,1",
-];
-
 export class Level {
-    constructor({
-        name,
-        tileData,
-        playerPos,
-        birdData,
-        backgroundName,
-        backgroundColor,
-    }) {
+    constructor({ name, rectangles, playerPos }) {
         this.name = name;
-        this.tileData = tileData;
-        this.playerPos = playerPos;
-        this.birdData = birdData;
-        this.backgroundName = backgroundName;
-        this.backgroundColor = backgroundColor;
+        this.objects = {
+            players: [new Player({ pos: playerPos })],
+            rectangles: rectangles,
+        };
         this.timer = new Timer();
         this.timer.update = (deltaTime) => this.update(deltaTime);
         this.status = null;
+    }
+
+    makeReady() {
+        this.status = STATUS.READY;
+        this.drawLevelInfo();
+        this.addControls();
     }
 
     addControls() {
@@ -61,12 +40,6 @@ export class Level {
         });
     }
 
-    makeReady() {
-        this.drawLevelInfo();
-        this.status = STATUS.READY;
-        this.addControls();
-    }
-
     pause() {
         this.status = STATUS.PAUSED;
         this.timer.pause();
@@ -79,114 +52,25 @@ export class Level {
     }
 
     drawLevelInfo() {
-        clearCanvas("object");
-        ctx.object.fillText(
+        clearCanvas();
+        ctx.fillText(
             `Press 'Space' to start ${this.name}`,
-            canvas.size.x / 2,
-            canvas.size.y / 2
+            canvas.width / 2,
+            canvas.height / 2
         );
-    }
-
-    getRectanglesFromTiles() {
-        const rectangles = [];
-        for (const tileCoord in this.tileData) {
-            if (SOLID_TILES.includes(tileCoord)) {
-                for (const targetCoord of this.tileData[tileCoord]) {
-                    const [u, v] = targetCoord.split(",");
-                    let u1 = u;
-                    let u2 = u;
-                    let v1 = v;
-                    let v2 = v;
-                    if (u.includes("-")) {
-                        [u1, u2] = u.split("-");
-                    }
-                    if (v.includes("-")) {
-                        [v1, v2] = v.split("-");
-                    }
-                    rectangles.push(
-                        new Rectangle({
-                            pos: {
-                                x: u1 * TILE_SIZE,
-                                y: v1 * TILE_SIZE,
-                            },
-                            size: {
-                                x: (u2 - u1 + 1) * TILE_SIZE,
-                                y: (v2 - v1 + 1) * TILE_SIZE,
-                            },
-                        })
-                    );
-                }
-            }
-        }
-        return rectangles;
-    }
-
-    drawTiles() {
-        clearCanvas("tile");
-        for (const tileCoord in this.tileData) {
-            const [x, y] = tileCoord.split(",");
-            for (const targetCoord of this.tileData[tileCoord]) {
-                const [u, v] = targetCoord.split(",");
-                let u1 = u;
-                let u2 = u;
-                let v1 = v;
-                let v2 = v;
-                if (u.includes("-")) {
-                    [u1, u2] = u.split("-");
-                }
-                if (v.includes("-")) {
-                    [v1, v2] = v.split("-");
-                }
-                for (let p = u1; p <= u2; p++) {
-                    for (let q = v1; q <= v2; q++) {
-                        ctx.tile.drawImage(
-                            IMAGE.TILEMAP,
-                            x * TILE_SIZE,
-                            y * TILE_SIZE,
-                            TILE_SIZE,
-                            TILE_SIZE,
-                            p * TILE_SIZE,
-                            q * TILE_SIZE,
-                            TILE_SIZE,
-                            TILE_SIZE
-                        );
-                    }
-                }
-            }
-        }
     }
 
     start() {
         this.status = STATUS.STARTED;
-        this.drawTiles();
-        this.player = new Player({ pos: this.playerPos });
-        this.objects = {
-            players: [this.player],
-            birds: this.birdData.map(
-                ({ x, y, type }) => new Bird({ pos: { x, y }, type })
-            ),
-            rectangles: this.getRectanglesFromTiles(),
-        };
         this.objectList = Object.values(this.objects).flat();
-        this.background = new Background({
-            name: this.backgroundName,
-            color: this.backgroundColor,
-        });
         this.timer.start();
     }
 
     update(deltaTime) {
-        this.background.update(deltaTime);
-        this.background.draw();
-        clearCanvas("object");
+        clearCanvas();
         this.objectList.forEach((obj) =>
             obj.update(this.objects, deltaTime)
         );
         this.objectList.forEach((obj) => obj.draw());
-        this.otherFeatures();
-    }
-
-    otherFeatures() {
-        return;
     }
 }

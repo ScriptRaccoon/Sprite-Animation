@@ -1,11 +1,24 @@
-import { canvas, ctx } from "../canvas.js";
+import { ctx } from "../canvas.js";
 
 export class Rectangle {
     constructor({ pos, size }) {
-        this.level = null;
         this.pos = pos;
-        this.size = size || { x: 16, y: 16 };
-        this.originalPos = { ...this.pos };
+        this.size = size;
+        this.color = "blue";
+    }
+
+    draw() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(
+            this.pos.x,
+            this.pos.y,
+            this.size.x,
+            this.size.y
+        );
+    }
+
+    update() {
+        return;
     }
 
     get left() {
@@ -48,13 +61,5 @@ export class Rectangle {
             this.bottom + offset.y > obj.top &&
             this.top + offset.y < obj.bottom
         );
-    }
-
-    draw() {
-        return;
-    }
-
-    update() {
-        return;
     }
 }

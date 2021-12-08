@@ -10,18 +10,6 @@ body {
     background: #111;
 }
 canvas {
-    position: absolute;
     border-radius: 4px;
-}
-
-#backgroundCanvas {
-    z-index: 0;
-}
-
-#tileCanvas {
-    z-index: 1;
-}
-
-#objectCanvas {
-    z-index: 2;
+    background-color: white;
 }
