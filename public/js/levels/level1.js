@@ -60,7 +60,11 @@ level1.otherFeatures = () => {
         const y = player.pos.y + player.size.y - TILE_SIZE;
         const u = Math.round(x / TILE_SIZE);
         const v = Math.round(y / TILE_SIZE);
-        if (!flowers.includes(`${u},${v}`)) flowers.push(`${u},${v}`);
+        if (
+            !flowers.includes(`${u},${v}`) &&
+            level1.isSolidAt(u, v + 1)
+        )
+            flowers.push(`${u},${v}`);
         level1.drawTiles();
     }
 };

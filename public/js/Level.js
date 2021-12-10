@@ -45,6 +45,7 @@ export class Level {
         this.timer = new Timer();
         this.timer.update = (deltaTime) => this.update(deltaTime);
         this.status = null;
+        this.solidCoords = [];
     }
 
     addControls() {
@@ -115,6 +116,11 @@ export class Level {
                             },
                         })
                     );
+                    for (let p = u1; p <= u2; p++) {
+                        for (let q = v1; q <= v2; q++) {
+                            this.solidCoords.push(`${p},${q}`);
+                        }
+                    }
                 }
             }
         }
@@ -156,6 +162,10 @@ export class Level {
         }
     }
 
+    isSolidAt(p, q) {
+        return this.solidCoords.includes(`${p},${q}`);
+    }
+
     start() {
         this.status = LEVEL_STATUS.STARTED;
         this.drawTiles();
@@ -167,6 +177,7 @@ export class Level {
             ),
             rectangles: this.getRectanglesFromTiles(),
         };
+        console.log(this.solidCoords);
         this.objectList = Object.values(this.objects).flat();
         this.background = new Background({
             name: this.backgroundName,
