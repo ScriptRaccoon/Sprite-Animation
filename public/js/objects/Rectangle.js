@@ -1,6 +1,6 @@
 export class Rectangle {
-    constructor({ pos, size }) {
-        this.level = null;
+    constructor({ pos, size, level }) {
+        this.level = level;
         this.pos = pos;
         this.size = size || { x: 16, y: 16 };
     }

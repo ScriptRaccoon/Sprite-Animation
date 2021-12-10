@@ -12,8 +12,16 @@ export const SPRITE_STATUS = {
 };
 
 export class Sprite extends Rectangle {
-    constructor({ pos, size, vel, gravity, spriteSheet, drawSize }) {
-        super({ pos, size });
+    constructor({
+        pos,
+        size,
+        level,
+        vel,
+        gravity,
+        spriteSheet,
+        drawSize,
+    }) {
+        super({ pos, size, level });
         this.vel = vel || { x: 0, y: 0 };
         this.spriteSheet = spriteSheet;
         this.orientation = 1;

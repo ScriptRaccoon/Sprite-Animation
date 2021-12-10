@@ -3,13 +3,15 @@ import { pick } from "../controls/pick.js";
 import { walk } from "../controls/walk.js";
 import { boundToCanvas } from "../features/bound.js";
 import { collideWithRectangles } from "../features/collision.js";
+import { plant } from "../features/plant.js";
 import { IMAGE } from "../images.js";
 import { Sprite, SPRITE_STATUS } from "./Sprite.js";
 
 export class Player extends Sprite {
-    constructor({ pos }) {
+    constructor({ pos, level }) {
         super({
             pos,
+            level,
             size: { x: 20, y: 50 },
             vel: { x: 0, y: 0 },
             gravity: 0.7,
@@ -24,6 +26,7 @@ export class Player extends Sprite {
         this.features = [
             boundToCanvas(this),
             collideWithRectangles(this),
+            plant(this),
         ];
         this.animation.frames = {
             idle: [{ x: 0, y: 0 }],

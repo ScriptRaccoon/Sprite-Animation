@@ -3,9 +3,10 @@ import { IMAGE } from "../images.js";
 import { Sprite, SPRITE_STATUS } from "./Sprite.js";
 
 export class Bird extends Sprite {
-    constructor({ pos, type }) {
+    constructor({ pos, level, type }) {
         super({
             pos,
+            level,
             size: { x: 32, y: 32 },
             vel: { x: +2, y: 0 },
             spriteSheet:

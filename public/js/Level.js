@@ -169,15 +169,18 @@ export class Level {
     start() {
         this.status = LEVEL_STATUS.STARTED;
         this.drawTiles();
-        this.player = new Player({ pos: this.playerPos });
+        this.player = new Player({
+            pos: this.playerPos,
+            level: this,
+        });
         this.objects = {
             players: [this.player],
             birds: this.birdData.map(
-                ({ x, y, type }) => new Bird({ pos: { x, y }, type })
+                ({ x, y, type }) =>
+                    new Bird({ pos: { x, y }, type, level: this })
             ),
             rectangles: this.getRectanglesFromTiles(),
         };
-        console.log(this.solidCoords);
         this.objectList = Object.values(this.objects).flat();
         this.background = new Background({
             name: this.backgroundName,
@@ -194,10 +197,5 @@ export class Level {
             obj.update(this.objects, deltaTime)
         );
         this.objectList.forEach((obj) => obj.draw());
-        this.otherFeatures();
-    }
-
-    otherFeatures() {
-        return;
     }
 }
