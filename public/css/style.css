@@ -22,6 +22,6 @@ canvas {
     z-index: 1;
 }
 
-#objectCanvas {
+#entityCanvas {
     z-index: 2;
 }

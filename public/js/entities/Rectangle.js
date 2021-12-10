@@ -37,13 +37,13 @@ export class Rectangle {
         this.pos.y = val - this.size.y;
     }
 
-    overlapsWith(obj, offset = { x: 0, y: 0 }) {
-        if (this === obj) return false;
+    overlapsWith(rect, offset = { x: 0, y: 0 }) {
+        if (this === rect) return false;
         return (
-            this.left + offset.x < obj.right &&
-            this.right + offset.x > obj.left &&
-            this.bottom + offset.y > obj.top &&
-            this.top + offset.y < obj.bottom
+            this.left + offset.x < rect.right &&
+            this.right + offset.x > rect.left &&
+            this.bottom + offset.y > rect.top &&
+            this.top + offset.y < rect.bottom
         );
     }
 

@@ -1,5 +1,5 @@
 import { TILE_SIZE } from "../Level.js";
-import { SPRITE_STATUS } from "../objects/Sprite.js";
+import { SPRITE_STATUS } from "../entities/Sprite.js";
 
 export const plant = (entity) => {
     return () => {

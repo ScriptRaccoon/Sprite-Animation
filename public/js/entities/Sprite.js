@@ -30,8 +30,11 @@ export class Sprite extends Rectangle {
         this.gravity = gravity || 0;
         this.features = [];
         this.status = SPRITE_STATUS.IDLE;
-        this.animation = new Animation(this, {
-            idle: [{ x: 0, y: 0 }],
+        this.animation = new Animation({
+            entity: this,
+            frames: {
+                idle: [{ x: 0, y: 0 }],
+            },
         });
     }
 
@@ -52,12 +55,12 @@ export class Sprite extends Rectangle {
     }
 
     draw() {
-        ctx.object.save();
+        ctx.entity.save();
 
         if (this.orientation == -1)
-            ctx.object.translate(canvas.size.x, 0);
+            ctx.entity.translate(canvas.size.x, 0);
 
-        ctx.object.scale(this.orientation, 1);
+        ctx.entity.scale(this.orientation, 1);
 
         const drawX =
             this.orientation == 1
@@ -69,7 +72,7 @@ export class Sprite extends Rectangle {
 
         const drawY = this.pos.y - (this.drawSize.y - this.size.y);
 
-        ctx.object.drawImage(
+        ctx.entity.drawImage(
             this.spriteSheet,
             this.drawSize.x * this.animation.frame.x,
             this.drawSize.y * this.animation.frame.y,
@@ -81,7 +84,7 @@ export class Sprite extends Rectangle {
             this.drawSize.y
         );
 
-        ctx.object.restore();
+        ctx.entity.restore();
     }
 
     applyPhysics(deltaTime) {
@@ -92,10 +95,10 @@ export class Sprite extends Rectangle {
         this.pos.x += this.vel.x * deltaTime;
     }
 
-    update(objects, deltaTime) {
+    update(deltaTime) {
         this.applyPhysics(deltaTime);
         for (const feature of this.features) {
-            feature(objects, deltaTime);
+            feature(this.level.entities, deltaTime);
         }
         if (this.vel.x != 0)
             this.orientation = this.vel.x > 0 ? +1 : -1;

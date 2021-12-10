@@ -1,38 +1,38 @@
 const collide = {
-    above: (entity, obj) => {
+    above: (entity, rect) => {
         if (
-            entity.prevBottom <= obj.top &&
-            entity.overlapsWith(obj)
+            entity.prevBottom <= rect.top &&
+            entity.overlapsWith(rect)
         ) {
-            entity.setBottom(obj.top);
+            entity.setBottom(rect.top);
             entity.vel.y = 0;
             entity.onGround = true;
         }
     },
-    below: (entity, obj) => {
+    below: (entity, rect) => {
         if (
-            entity.prevTop >= obj.bottom &&
-            entity.overlapsWith(obj)
+            entity.prevTop >= rect.bottom &&
+            entity.overlapsWith(rect)
         ) {
-            entity.setTop(obj.bottom);
+            entity.setTop(rect.bottom);
             entity.vel.y = 0;
         }
     },
-    left: (entity, obj) => {
+    left: (entity, rect) => {
         if (
-            entity.prevRight <= obj.left &&
-            entity.overlapsWith(obj)
+            entity.prevRight <= rect.left &&
+            entity.overlapsWith(rect)
         ) {
-            entity.setRight(obj.left);
+            entity.setRight(rect.left);
             entity.vel.x = 0;
         }
     },
-    right: (entity, obj) => {
+    right: (entity, rect) => {
         if (
-            entity.prevLeft >= obj.right &&
-            entity.overlapsWith(obj)
+            entity.prevLeft >= rect.right &&
+            entity.overlapsWith(rect)
         ) {
-            entity.setLeft(obj.right);
+            entity.setLeft(rect.right);
             entity.vel.x = 0;
         }
     },
@@ -40,12 +40,12 @@ const collide = {
 
 export const collideWithRectangles = (entity) => {
     entity.onGround = false;
-    return (objects) => {
-        for (const obj of objects.rectangles) {
-            collide.above(entity, obj);
-            collide.below(entity, obj);
-            collide.left(entity, obj);
-            collide.right(entity, obj);
+    return (entities) => {
+        for (const rect of entities.rectangles) {
+            collide.above(entity, rect);
+            collide.below(entity, rect);
+            collide.left(entity, rect);
+            collide.right(entity, rect);
         }
     };
 };

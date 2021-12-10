@@ -1,7 +1,7 @@
 export class Animation {
-    constructor(entity, frames) {
+    constructor({ entity, frames }) {
         this.entity = entity;
-        this.speed = 0.25;
+        this.speed = 0.2;
         this.frames = frames;
         this.timer = 0;
         this.frame = this.frames[this.entity.status][0];

@@ -1,10 +1,10 @@
 import { clearCanvas, canvas, ctx } from "./canvas.js";
 import { IMAGE } from "./images.js";
-import { Player } from "./objects/Player.js";
-import { Rectangle } from "./objects/Rectangle.js";
+import { Player } from "./entities/Player.js";
+import { Rectangle } from "./entities/Rectangle.js";
 import { Timer } from "./Timer.js";
-import { Bird } from "./objects/Bird.js";
-import { Background } from "./objects/Background.js";
+import { Bird } from "./entities/Bird.js";
+import { Background } from "./entities/Background.js";
 
 const LEVEL_STATUS = {
     READY: 1,
@@ -80,8 +80,8 @@ export class Level {
     }
 
     drawLevelInfo() {
-        clearCanvas("object");
-        ctx.object.fillText(
+        clearCanvas("entity");
+        ctx.entity.fillText(
             `Press 'Space' to start ${this.name}`,
             canvas.size.x / 2,
             canvas.size.y / 2
@@ -173,7 +173,7 @@ export class Level {
             pos: this.playerPos,
             level: this,
         });
-        this.objects = {
+        this.entities = {
             players: [this.player],
             birds: this.birdData.map(
                 ({ x, y, type }) =>
@@ -181,7 +181,7 @@ export class Level {
             ),
             rectangles: this.getRectanglesFromTiles(),
         };
-        this.objectList = Object.values(this.objects).flat();
+        this.entityList = Object.values(this.entities).flat();
         this.background = new Background({
             name: this.backgroundName,
             color: this.backgroundColor,
@@ -192,10 +192,8 @@ export class Level {
     update(deltaTime) {
         this.background.update(deltaTime);
         this.background.draw();
-        clearCanvas("object");
-        this.objectList.forEach((obj) =>
-            obj.update(this.objects, deltaTime)
-        );
-        this.objectList.forEach((obj) => obj.draw());
+        clearCanvas("entity");
+        this.entityList.forEach((entity) => entity.update(deltaTime));
+        this.entityList.forEach((entity) => entity.draw());
     }
 }

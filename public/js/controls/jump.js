@@ -1,4 +1,4 @@
-import { SPRITE_STATUS } from "../objects/Sprite.js";
+import { SPRITE_STATUS } from "../entities/Sprite.js";
 
 export const jump = (entity, { speed }) => {
     return () => {

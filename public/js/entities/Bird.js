@@ -22,6 +22,7 @@ export class Bird extends Sprite {
                 { x: 2, y: 3 },
             ],
         };
+        this.animation.speed = 0.1;
     }
 
     calculateStatus() {
