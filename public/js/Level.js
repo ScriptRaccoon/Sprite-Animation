@@ -6,7 +6,7 @@ import { Timer } from "./Timer.js";
 import { Bird } from "./objects/Bird.js";
 import { Background } from "./objects/Background.js";
 
-const STATUS = {
+const LEVEL_STATUS = {
     READY: 1,
     STARTED: 2,
     PAUSED: 3,
@@ -50,11 +50,11 @@ export class Level {
     addControls() {
         document.addEventListener("keydown", (e) => {
             if (e.key === " ") {
-                if (this.status == STATUS.READY) {
+                if (this.status == LEVEL_STATUS.READY) {
                     this.start();
-                } else if (this.status == STATUS.STARTED) {
+                } else if (this.status == LEVEL_STATUS.STARTED) {
                     this.pause();
-                } else if (this.status == STATUS.PAUSED) {
+                } else if (this.status == LEVEL_STATUS.PAUSED) {
                     this.resume();
                 }
             }
@@ -63,17 +63,17 @@ export class Level {
 
     makeReady() {
         this.drawLevelInfo();
-        this.status = STATUS.READY;
+        this.status = LEVEL_STATUS.READY;
         this.addControls();
     }
 
     pause() {
-        this.status = STATUS.PAUSED;
+        this.status = LEVEL_STATUS.PAUSED;
         this.timer.pause();
     }
 
     resume() {
-        this.status = STATUS.STARTED;
+        this.status = LEVEL_STATUS.STARTED;
         this.timer.paused = false;
         this.timer.start();
     }
@@ -157,7 +157,7 @@ export class Level {
     }
 
     start() {
-        this.status = STATUS.STARTED;
+        this.status = LEVEL_STATUS.STARTED;
         this.drawTiles();
         this.player = new Player({ pos: this.playerPos });
         this.objects = {

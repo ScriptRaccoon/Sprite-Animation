@@ -1,4 +1,5 @@
 import { Level, TILE_SIZE } from "../level.js";
+import { SPRITE_STATUS } from "../objects/Sprite.js";
 
 export const level1 = new Level({
     name: "Level 1",
@@ -54,7 +55,7 @@ export const level1 = new Level({
 level1.otherFeatures = () => {
     const player = level1.player;
     const flowers = level1.tileData["7,0"];
-    if (player.picking) {
+    if (player.status == SPRITE_STATUS.PICKING) {
         const x = player.pos.x + player.orientation * TILE_SIZE;
         const y = player.pos.y + player.size.y - TILE_SIZE;
         const u = Math.round(x / TILE_SIZE);

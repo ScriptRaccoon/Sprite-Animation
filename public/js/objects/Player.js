@@ -1,13 +1,10 @@
 import { jump } from "../controls/jump.js";
 import { pick } from "../controls/pick.js";
 import { walk } from "../controls/walk.js";
-import { animateJump } from "../features/animateJump.js";
-import { animatePick } from "../features/animatePick.js";
-import { animateWalk } from "../features/animateWalk.js";
 import { boundToCanvas } from "../features/bound.js";
 import { collideWithRectangles } from "../features/collision.js";
 import { IMAGE } from "../images.js";
-import { Sprite } from "./Sprite.js";
+import { Sprite, SPRITE_STATUS } from "./Sprite.js";
 
 export class Player extends Sprite {
     constructor({ pos }) {
@@ -27,10 +24,23 @@ export class Player extends Sprite {
         this.features = [
             boundToCanvas(this),
             collideWithRectangles(this),
-            animateWalk(this, { walkRow: 1, walkCount: 8 }),
-            animateJump(this, { frames: [2, 3, 4] }),
-            animatePick(this, { frame: 1 }),
         ];
+        this.animation.frames = {
+            idle: [{ x: 0, y: 0 }],
+            jumping: [{ x: 2, y: 0 }],
+            jumpingSide: [{ x: 3, y: 0 }],
+            walking: [
+                { x: 0, y: 1 },
+                { x: 1, y: 1 },
+                { x: 2, y: 1 },
+                { x: 3, y: 1 },
+                { x: 4, y: 1 },
+                { x: 5, y: 1 },
+                { x: 6, y: 1 },
+                { x: 7, y: 1 },
+            ],
+            picking: [{ x: 1, y: 0 }],
+        };
     }
 
     addControls(controls) {
@@ -58,5 +68,17 @@ export class Player extends Sprite {
                 controls.pick(false);
             }
         });
+    }
+
+    calculateStatus() {
+        if (this.status == SPRITE_STATUS.PICKING) return;
+        this.status =
+            this.vel.y != 0
+                ? this.vel.x != 0
+                    ? SPRITE_STATUS.JUMPING_SIDE
+                    : SPRITE_STATUS.JUMPING
+                : this.vel.x != 0
+                ? SPRITE_STATUS.WALKING
+                : SPRITE_STATUS.IDLE;
     }
 }
