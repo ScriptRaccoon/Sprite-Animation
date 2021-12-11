@@ -33,15 +33,13 @@ export class Level {
         tileData,
         playerPos,
         birdData,
-        backgroundName,
-        backgroundColor,
+        backgroundData,
     }) {
         this.name = name;
         this.tileData = tileData;
         this.playerPos = playerPos;
         this.birdData = birdData;
-        this.backgroundName = backgroundName;
-        this.backgroundColor = backgroundColor;
+        this.backgroundData = backgroundData;
         this.timer = new Timer();
         this.timer.update = (deltaTime) => this.update(deltaTime);
         this.status = null;
@@ -182,10 +180,7 @@ export class Level {
             rectangles: this.getRectanglesFromTiles(),
         };
         this.entityList = Object.values(this.entities).flat();
-        this.background = new Background({
-            name: this.backgroundName,
-            color: this.backgroundColor,
-        });
+        this.background = new Background(this.backgroundData);
         this.timer.start();
     }
 

@@ -47,6 +47,5 @@ export const level1 = new Level({
         { x: -50, y: 20, type: "red" },
         { x: -100, y: 30, type: "white" },
     ],
-    backgroundName: "CLOUDS",
-    backgroundColor: "skyblue",
+    backgroundData: { name: "CLOUDS", color: "skyblue" },
 });
