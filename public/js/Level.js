@@ -4,7 +4,7 @@ import { Player } from "./entities/Player.js";
 import { Rectangle } from "./entities/Rectangle.js";
 import { Timer } from "./Timer.js";
 import { Bird } from "./entities/Bird.js";
-import { Background } from "./entities/Background.js";
+import { Background } from "./Background.js";
 
 const LEVEL_STATUS = {
     READY: 1,

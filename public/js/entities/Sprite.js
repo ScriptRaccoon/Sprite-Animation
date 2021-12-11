@@ -55,22 +55,19 @@ export class Sprite extends Rectangle {
     }
 
     draw() {
+        let posX = this.pos.x - (this.drawSize.x - this.size.x) / 2;
+        let posY = this.pos.y - (this.drawSize.y - this.size.y) / 2;
         ctx.entity.save();
 
-        if (this.orientation == -1)
+        if (this.orientation == -1) {
             ctx.entity.translate(canvas.size.x, 0);
-
-        ctx.entity.scale(this.orientation, 1);
-
-        const drawX =
-            this.orientation == 1
-                ? this.pos.x - (this.drawSize.x - this.size.x) / 2
-                : canvas.size.x -
-                  this.pos.x -
-                  this.drawSize.x +
-                  (this.drawSize.x - this.size.x) / 2;
-
-        const drawY = this.pos.y - (this.drawSize.y - this.size.y);
+            ctx.entity.scale(-1, 1);
+            posX =
+                canvas.size.x -
+                this.pos.x -
+                this.drawSize.x +
+                (this.drawSize.x - this.size.x) / 2;
+        }
 
         ctx.entity.drawImage(
             this.spriteSheet,
@@ -78,8 +75,8 @@ export class Sprite extends Rectangle {
             this.drawSize.y * this.animation.frame.y,
             this.drawSize.x,
             this.drawSize.y,
-            drawX,
-            drawY,
+            posX,
+            posY,
             this.drawSize.x,
             this.drawSize.y
         );

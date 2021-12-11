@@ -7,10 +7,6 @@ export class Animation {
         this.frame = this.frames[this.entity.status][0];
     }
 
-    handleStatus() {
-        return;
-    }
-
     update(deltaTime) {
         if (this.entity.status != this.entity.previousStatus) {
             this.timer = 0;

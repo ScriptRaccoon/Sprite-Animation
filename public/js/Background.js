@@ -1,5 +1,5 @@
-import { canvas, ctx } from "../canvas.js";
-import { IMAGE } from "../images.js";
+import { canvas, ctx } from "./canvas.js";
+import { IMAGE } from "./images.js";
 
 export class Background {
     constructor({ name, color, speed }) {
